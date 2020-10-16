@@ -1,6 +1,11 @@
 // from data.js
 var tableData = data;
 var datetime = d3.select("#datetime");
+var cityform = d3.select("#cityform");
+var stateform = d3.select("#stateform");
+var countryform = d3.select("#countryform");
+var shapeform = d3.select("#shapeform");
+var filter_btn = d3.select("#filter-btn");
 
 function updateTable(thisTableData) {
 
@@ -30,21 +35,45 @@ function updateTable(thisTableData) {
   });
 }
 
-
-//function ByExactDate(sightingReport) {
-//  return sightingReport.datetime === 
-//}
-
 // Function to handle datetime filter input change
 function handleChange(event) {
 
-  // grab the value of the input field
-  var inputText = d3.event.target.value;
+  var filteredData = tableData;
 
-  console.log(inputText);
+  console.log("Oh, I don't think so");
+  console.log(filteredData);
 
-  var filteredData = tableData.filter(sightingReport => sightingReport.datetime === inputText);
+  var datetime_value = d3.select("#datetime").property("value");
+  if (datetime_value) {
+    console.log(datetime_value);
+    filteredData = filteredData.filter(sightingReport => sightingReport.datetime === datetime_value);
+  }
 
+  var cityform_value = d3.select("#cityform").property("value");
+  if (cityform_value) {
+    console.log(cityform_value);
+    filteredData = filteredData.filter(sightingReport => sightingReport.city.toLowerCase() === cityform_value.toLowerCase());
+  }
+
+  var stateform_value = d3.select("#stateform").property("value");
+  if (stateform_value) {
+    console.log(stateform_value);
+    filteredData = filteredData.filter(sightingReport => sightingReport.state.toLowerCase() === stateform_value.toLowerCase());
+  }
+
+  var countryform_value = d3.select("#countryform").property("value");
+  if (countryform_value) {
+    console.log(countryform_value);
+    filteredData = filteredData.filter(sightingReport => sightingReport.country.toLowerCase() === countryform_value.toLowerCase());
+  }
+
+  var shapeform_value = d3.select("#shapeform").property("value");
+  if (shapeform_value) {
+    console.log(shapeform_value);
+    filteredData = filteredData.filter(sightingReport => sightingReport.shape.toLowerCase() === shapeform_value.toLowerCase());
+  }
+
+  console.log("Another Happy Landing!");
   console.log(filteredData);
 
   updateTable(filteredData);
@@ -52,7 +81,14 @@ function handleChange(event) {
   return false;
 }
 
+
+filter_btn.on("click",handleChange);
+
 datetime.on("change", handleChange);
+cityform.on("change", handleChange);
+stateform.on("change", handleChange);
+countryform.on("change", handleChange);
+shapeform.on("change", handleChange);
 
 
 updateTable(tableData);
