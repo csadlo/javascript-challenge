@@ -55,6 +55,9 @@ function decode(str) {
 // Function to handle datetime filter input change
 function handleChange(event) {
 
+  // Prevent the page from refreshing
+  d3.event.preventDefault();
+
   var filteredData = tableData;
 
   console.log("Oh, I don't think so");
@@ -90,7 +93,6 @@ function handleChange(event) {
     filteredData = filteredData.filter(sightingReport => sightingReport.shape.toLowerCase() === shapeform_value.toLowerCase());
   }
 
-
   //decode(filteredData.comments);
   filteredData.forEach((row) => {
 
@@ -100,9 +102,6 @@ function handleChange(event) {
 
   });
 
-
-
-
   console.log("Another Happy Landing!");
   console.log(filteredData);
 
@@ -111,14 +110,12 @@ function handleChange(event) {
   return false;
 }
 
-
 filter_btn.on("click",handleChange);
 
-datetime.on("change", handleChange);
-cityform.on("change", handleChange);
-stateform.on("change", handleChange);
-countryform.on("change", handleChange);
-shapeform.on("change", handleChange);
-
+// datetime.on("change", handleChange);
+// cityform.on("change", handleChange);
+// stateform.on("change", handleChange);
+// countryform.on("change", handleChange);
+// shapeform.on("change", handleChange);
 
 updateTable(tableData);
