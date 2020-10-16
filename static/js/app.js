@@ -12,7 +12,7 @@ function updateTable(thisTableData) {
   console.log("Hello There!");
 
   // Start from scratch
-  d3.selectAll("tr").remove();
+  d3.select("tbody").selectAll("tr").remove();
 
   // Get a reference to the table body
   var tbody = d3.select("tbody");
@@ -32,6 +32,23 @@ function updateTable(thisTableData) {
       var cell = row.append("td");
       cell.text(value);
     });
+  });
+}
+
+function encode(str) {
+  var buf = [];
+  
+  for (var i=str.length-1;i>=0;i--) {
+    buf.unshift(['&#', str[i].charCodeAt(), ';'].join(''));
+  }
+  
+  return buf.join('');
+}
+
+// Convert the weird HTML code into the original characters
+function decode(str) {
+  return str.replace(/&#(\d+);/g, function(match, dec) {
+    return String.fromCharCode(dec);
   });
 }
 
@@ -72,6 +89,19 @@ function handleChange(event) {
     console.log(shapeform_value);
     filteredData = filteredData.filter(sightingReport => sightingReport.shape.toLowerCase() === shapeform_value.toLowerCase());
   }
+
+
+  //decode(filteredData.comments);
+  filteredData.forEach((row) => {
+
+    console.log("Comments");
+    row.comments = decode(row.comments);
+    console.log(row.comments);
+
+  });
+
+
+
 
   console.log("Another Happy Landing!");
   console.log(filteredData);
