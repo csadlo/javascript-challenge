@@ -112,6 +112,7 @@ function handleChange(event) {
 
 filter_btn.on("click",handleChange);
 
+// Uncomment this if you want the website to refresh when clicking off of a filter form
 // datetime.on("change", handleChange);
 // cityform.on("change", handleChange);
 // stateform.on("change", handleChange);
